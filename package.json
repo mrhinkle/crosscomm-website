@@ -27,12 +27,14 @@
     "check": "pnpm typecheck && pnpm lint && pnpm actionlint && pnpm test && pnpm build && pnpm smoke && pnpm test:e2e"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "dependencies": {
-    "@fontsource/manrope": "5.3.0",
+    "@fontsource/archivo-narrow": "5.3.0",
     "@fontsource/ibm-plex-mono": "5.3.0",
-    "@fontsource/source-sans-3": "5.3.0",
+    "@fontsource/open-sans": "5.3.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-router": "7.18.4"

@@ -104,7 +104,6 @@ export function ProjectCard({ project }: { project: ProjectRecord }) {
           decoding="async"
         />
       </div>
-      <p className="caption">{project.caption}</p>
       <ul className="tags">
         {project.categories.map((category) => (
           <li key={category}>{categoryLabels[category]}</li>

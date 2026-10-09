@@ -366,6 +366,15 @@ test("review screenshots", async ({ page }, testInfo) => {
 });
 
 async function seriousAxe(page: Page, include?: string) {
+  // Measure contrast at rest: let entrance and reveal transitions finish. Looping animations are skipped.
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        .filter((animation) => animation.effect?.getComputedTiming().iterations !== Infinity)
+        .map((animation) => animation.finished.catch(() => undefined)),
+    ),
+  );
   const builder = new AxeBuilder({ page });
   const result = await (include ? builder.include(include) : builder).analyze();
   return result.violations.filter((violation) => violation.impact === "serious" || violation.impact === "critical");

@@ -39,18 +39,18 @@ const font = await page.evaluate(async () => {
   await document.fonts.ready;
   const face = [...document.fonts].find((entry) => {
     const family = entry.family.replaceAll('"', "").replaceAll("'", "");
-    return family === "Manrope" && entry.weight === "600" && entry.style === "normal";
+    return family === "Archivo Narrow" && entry.weight === "700" && entry.style === "normal";
   });
   if (!face) {
-    throw new Error("Manrope weight 600 normal is not registered");
+    throw new Error("Archivo Narrow weight 700 normal is not registered");
   }
   await face.load();
-  const check = document.fonts.check("600 16px Manrope");
+  const check = document.fonts.check("700 16px \"Archivo Narrow\"");
   return { status: face.status, check };
 });
 
 if (font.status !== "loaded" || !font.check) {
-  throw new Error(`Manrope 600 did not load (status ${font.status}, check ${font.check})`);
+  throw new Error(`Archivo Narrow 700 did not load (status ${font.status}, check ${font.check})`);
 }
 
 await page.screenshot({ path: out, type: "png", clip: { x: 0, y: 0, width: 1200, height: 630 } });

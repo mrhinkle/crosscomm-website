@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router";
 import { siteConfig } from "../site-config";
 import { useOrigins } from "../lib/origins";
+import { useReveal } from "../lib/reveal";
 import { useRouteDocument } from "../lib/route-document";
 import { FeedbackDialog } from "./FeedbackDialog";
 import { Logo, isCurrent, primaryNav } from "./chrome";
@@ -10,6 +11,7 @@ export function Shell() {
   useRouteDocument();
   const origins = useOrigins();
   const { pathname } = useLocation();
+  useReveal(pathname);
   const [menu, setMenu] = useState({ path: pathname, open: false });
   const open = menu.path === pathname && menu.open;
   const setOpen = useCallback((next: boolean | ((value: boolean) => boolean)) => {
@@ -141,20 +143,13 @@ export function Shell() {
           <div>
             <Logo />
             <p className="tagline">{siteConfig.tagline}</p>
-          </div>
-          <div>
-            <p className="eyebrow">Visit</p>
-            <ul className="plain-list">
-              {siteConfig.offices.map((office) => (
-                <li key={office.city}>
-                  {office.city}, {office.region}
-                </li>
-              ))}
-              <li>Founded {siteConfig.founded} by {siteConfig.founder}</li>
-            </ul>
+            <p className="footer-meta">
+              {siteConfig.offices.map((office) => `${office.city}, ${office.region}`).join(" · ")}
+              <br />
+              Founded {siteConfig.founded} by {siteConfig.founder}
+            </p>
           </div>
           <nav aria-label="Footer">
-            <p className="eyebrow">On this site</p>
             <ul className="plain-list">
               {primaryNav.map((item) => (
                 <li key={item.href}>
@@ -170,7 +165,6 @@ export function Shell() {
             </ul>
           </nav>
           <div>
-            <p className="eyebrow">Reach</p>
             <ul className="plain-list">
               <li>
                 <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
